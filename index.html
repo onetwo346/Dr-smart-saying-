@@ -12,10 +12,23 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background: linear-gradient(135deg, #003087, #ffffff, #ce1126);
             color: #333;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        /* Wrapper for main content */
+        .wrapper {
+            flex: 1 0 auto; /* Allows content to grow and push footer down */
         }
 
         /* Intro Page */
@@ -38,7 +51,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Overlay for better text visibility */
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
@@ -101,12 +114,14 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
         }
 
         nav ul {
             display: flex;
             justify-content: center;
             list-style: none;
+            flex-wrap: wrap; /* Allow nav items to wrap on smaller screens */
         }
 
         nav ul li {
@@ -127,7 +142,6 @@
         /* Main Page */
         #main-page {
             display: none;
-            min-height: 100vh;
             padding: 40px 20px;
             background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
             background-attachment: fixed;
@@ -161,6 +175,7 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
         }
 
         .quote-buttons button {
@@ -243,6 +258,8 @@
             color: white;
             padding: 20px;
             text-align: center;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+            width: 100%;
         }
 
         footer a {
@@ -261,9 +278,10 @@
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
+            z-index: 100;
         }
 
-        /* Responsive Design */
+        /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             #intro-page h1 {
                 font-size: 2rem;
@@ -285,6 +303,56 @@
             nav ul {
                 flex-direction: column;
                 gap: 10px;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .heritage-carousel img {
+                width: 150px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #intro-page h1 {
+                font-size: 1.5rem;
+            }
+
+            #intro-page p {
+                font-size: 1rem;
+            }
+
+            .pulse-button {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+
+            .quote-container {
+                padding: 20px;
+            }
+
+            .quote-container p {
+                font-size: 1.2rem;
+            }
+
+            .quote-buttons button {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+
+            .heritage-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .heritage-section p {
+                font-size: 1rem;
+            }
+
+            .heritage-carousel img {
+                width: 120px;
+                height: 100px;
             }
         }
     </style>
@@ -310,26 +378,28 @@
             </nav>
         </header>
 
-        <div id="quote-section" class="quote-container">
-            <p id="quote">Tap "Start Quotes" to begin!</p>
-            <div class="timer" id="timer">Timer: 10s</div>
-            <div class="quote-buttons">
-                <button id="start-quotes" onclick="startQuotes()">Start Quotes</button>
-                <button id="new-quote" onclick="fetchQuote()">New Quote</button>
-                <button id="share-quote" onclick="shareQuote()">Share</button>
-                <button id="save-quote" onclick="saveQuote()">Save</button>
+        <div class="wrapper">
+            <div id="quote-section" class="quote-container">
+                <p id="quote">Tap "Start Quotes" to begin!</p>
+                <div class="timer" id="timer">Timer: 10s</div>
+                <div class="quote-buttons">
+                    <button id="start-quotes" onclick="startQuotes()">Start Quotes</button>
+                    <button id="new-quote" onclick="fetchQuote()">New Quote</button>
+                    <button id="share-quote" onclick="shareQuote()">Share</button>
+                    <button id="save-quote" onclick="saveQuote()">Save</button>
+                </div>
             </div>
-        </div>
 
-        <div id="heritage-section" class="heritage-section">
-            <h2>Dominican Heritage Pride</h2>
-            <p>
-                The Dominican Republic, a Caribbean gem, is known for its vibrant culture, rich history, and resilient spirit. From the infectious rhythms of merengue and bachata to the colorful Carnival celebrations, Dominican pride shines through in every aspect of life. Our island, the first place where Christopher Columbus landed in the Americas, is home to the oldest European settlement, Santo Domingo’s Zona Colonial. We honor our Taíno, African, and European roots, blending them into a unique identity that celebrates family, faith, and community. Whether it’s savoring a plate of mangu or dancing under the stars, Dominican Vibes embodies the warmth and passion of our people.
-            </p>
-            <div class="heritage-carousel">
-                <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Dominican Beach">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Dominican Culture">
-                <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Merengue Dance">
+            <div id="heritage-section" class="heritage-section">
+                <h2>Dominican Heritage Pride</h2>
+                <p>
+                    The Dominican Republic, a Caribbean gem, is known for its vibrant culture, rich history, and resilient spirit. From the infectious rhythms of merengue and bachata to the colorful Carnival celebrations, Dominican pride shines through in every aspect of life. Our island, the first place where Christopher Columbus landed in the Americas, is home to the oldest European settlement, Santo Domingo’s Zona Colonial. We honor our Taíno, African, and European roots, blending them into a unique identity that celebrates family, faith, and community. Whether it’s savoring a plate of mangu or dancing under the stars, Dominican Vibes embodies the warmth and passion of our people.
+                </p>
+                <div class="heritage-carousel">
+                    <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Dominican Beach">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Dominican Culture">
+                    <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Merengue Dance">
+                </div>
             </div>
         </div>
 
@@ -399,7 +469,15 @@
         function shareQuote() {
             const quote = document.getElementById('quote').textContent;
             const shareText = encodeURIComponent(quote + " - Dominican Vibes 🇩🇴");
-            window.open(`https://twitter.com/intent/tweet?text=${shareText}`);
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Dominican Vibes Quote',
+                    text: quote + " - Dominican Vibes 🇩🇴",
+                    url: window.location.href
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                window.open(`https://twitter.com/intent/tweet?text=${shareText}`);
+            }
         }
 
         // Save quote
@@ -438,6 +516,11 @@
 
         // Initialize dynamic background
         setDynamicBackground();
+
+        // Ensure footer stays at bottom on resize
+        window.addEventListener('resize', () => {
+            document.body.style.minHeight = '100vh';
+        });
     </script>
 </body>
 </html>
