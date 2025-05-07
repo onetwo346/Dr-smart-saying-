@@ -2,15 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dominican Vibes - Quote Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Experience the wisdom, culture, and pride of the Dominican Republic through our immersive quote journey">
+    <meta name="theme-color" content="#003087">
+    <title>Dominican Vibes - Quote Experience</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* [Previous CSS remains unchanged, keeping it concise for this update] */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --dominican-blue: #003087;
+            --dominican-red: #ce1126;
+            --dominican-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
         }
 
         html, body {
@@ -20,17 +35,15 @@
         }
 
         body {
-            background: linear-gradient(135deg, #003087, #ffffff, #ce1126);
-            color: #333;
+            background: linear-gradient(135deg, #003087 0%, #003087 40%, #ffffff 50%, #ce1126 60%, #ce1126 100%);
+            color: #fff;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            perspective: 1000px;
         }
 
-        .wrapper {
-            flex: 1 0 auto;
-        }
-
+        /* Intro Page Styles */
         #intro-page {
             height: 100vh;
             display: flex;
@@ -38,241 +51,662 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: url('https://images.unsplash.com/photo-1517495306984-fcebe3c541dd') no-repeat center/cover;
             position: relative;
-            animation: fadeIn 2s ease-in;
+            overflow: hidden;
+            z-index: 10;
         }
 
-        #intro-page::before {
-            content: '';
+        .stars-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            overflow: hidden;
+            z-index: -1;
         }
 
-        #intro-page h1, #intro-page p, #intro-page button {
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: var(--opacity); }
+        }
+
+        .dominican-flag {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(0, 48, 135, 0.3) 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                rgba(206, 17, 38, 0.3) 100%);
+            z-index: -1;
+            filter: blur(50px);
+            animation: flagPulse 15s infinite alternate;
+        }
+
+        @keyframes flagPulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 0.3; transform: scale(1); }
+        }
+
+        .intro-content {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            transform-style: preserve-3d;
+            animation: float 6s infinite ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
+        }
+
+        #intro-page h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--dominican-blue) 30%, var(--dominican-white) 50%, var(--dominican-red) 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            position: relative;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 48, 135, 0.7); }
+            50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(206, 17, 38, 0.7); }
+        }
+
+        #intro-page p {
+            font-size: 1.1rem;
+            color: #000000;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .enter-button {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--dominican-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .enter-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20px;
+            width: 30px;
+            height: 100%;
+            background: var(--dominican-red);
+            transform: skewX(-20deg);
+            transition: all 0.3s ease;
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: #002a78;
+        }
+
+        .enter-button i {
             position: relative;
             z-index: 2;
         }
 
-        #intro-page h1 {
-            font-size: 3rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px;
-            animation: slideIn 1s ease-in;
+        /* Main Page Styles */
+        #main-page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
-        #intro-page p {
-            font-size: 1.2rem;
-            color: #f4f4f4;
-            margin-bottom: 20px;
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .pulse-button {
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            background: #ce1126;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            animation: pulse 1.5s infinite;
-            transition: transform 0.3s;
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1517495306984-fcebe3c541dd') center/cover no-repeat;
+            filter: brightness(0.5) saturate(1.5);
+            animation: zoomBg 30s infinite alternate ease-in-out;
         }
 
-        .pulse-button:hover {
-            transform: scale(1.1);
+        @keyframes zoomBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(206, 17, 38, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(206, 17, 38, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(206, 17, 38, 0); }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 48, 135, 0.7), rgba(0, 0, 0, 0.9));
+            z-index: 0;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
+        /* Header Styles */
         header {
-            background: #003087;
-            color: white;
-            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.2rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            width: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-white), var(--dominican-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         nav ul {
             display: flex;
-            justify-content: center;
+            gap: 2rem;
             list-style: none;
-            flex-wrap: wrap;
-        }
-
-        nav ul li {
-            margin: 0 20px;
         }
 
         nav ul li a {
             color: white;
             text-decoration: none;
-            font-size: 1.2rem;
-            transition: color 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-red));
+            transition: width 0.3s ease;
         }
 
         nav ul li a:hover {
-            color: #ce1126;
+            color: var(--dominican-white);
         }
 
-        #main-page {
-            display: none;
-            padding: 40px 20px;
-            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
-            background-attachment: fixed;
+        nav ul li a:hover:after {
+            width: 100%;
         }
 
+        /* Quote Container Styles */
         .quote-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
             text-align: center;
-            animation: slideIn 1s ease-in;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: all 0.5s ease;
+            z-index: 10;
         }
 
-        .quote-container p {
-            font-size: 1.8rem;
-            color: #003087;
-            margin-bottom: 20px;
+        .quote-container:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                rgba(0, 48, 135, 0.3), 
+                rgba(255, 255, 255, 0.1), 
+                rgba(206, 17, 38, 0.3));
+            transform: rotate(30deg);
+            z-index: -1;
+            animation: glassShine 10s infinite linear;
         }
 
-        .timer {
+        @keyframes glassShine {
+            0% { transform: translateY(-50%) translateX(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) translateX(-50%) rotate(360deg); }
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .spanish-quote {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dominican-white);
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .english-quote {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            margin-top: 0.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-timer {
+            display: inline-block;
             font-size: 1rem;
-            color: #ce1126;
-            margin-bottom: 10px;
+            color: var(--dominican-white);
+            background: rgba(206, 17, 38, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .quote-timer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--progress);
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-red));
+            border-radius: 50px;
+            z-index: -1;
+            transition: width 1s linear;
         }
 
         .quote-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 2rem;
             flex-wrap: wrap;
         }
 
-        .quote-buttons button {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 10px;
+        .quote-btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        #start-quotes {
-            background: #003087;
-            color: white;
-        }
-
-        #start-quotes:hover {
-            background: #ce1126;
-        }
-
-        #new-quote {
-            background: #ce1126;
-            color: white;
-        }
-
-        #new-quote:hover {
-            background: #003087;
-        }
-
-        #share-quote, #save-quote, #read-aloud {
-            background: #f4f4f4;
-            color: #333;
-        }
-
-        #share-quote:hover, #save-quote:hover, #read-aloud:hover {
-            background: #ddd;
-        }
-
-        .heritage-section {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .heritage-section h2 {
-            font-size: 2.5rem;
-            color: #ce1126;
-            margin-bottom: 20px;
-        }
-
-        .heritage-section p {
-            font-size: 1.2rem;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .heritage-carousel {
+            transition: all 0.3s ease;
             display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 10px;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .heritage-carousel img {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
+        .quote-btn i {
+            font-size: 1.2rem;
         }
 
-        footer {
-            background: #003087;
+        .quote-btn.primary {
+            background: linear-gradient(45deg, var(--dominican-blue), var(--dominican-red));
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .quote-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .quote-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .quote-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Heritage Section Styles */
+        .heritage-section {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .heritage-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .heritage-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
             color: white;
-            padding: 20px;
+            margin-bottom: 1rem;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .heritage-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-red));
+            border-radius: 2px;
+        }
+
+        .heritage-title p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .heritage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .heritage-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .heritage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .heritage-card-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heritage-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .heritage-card:hover .heritage-card-img img {
+            transform: scale(1.1);
+        }
+
+        .heritage-card-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .heritage-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-white), var(--dominican-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .heritage-card-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .heritage-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--dominican-white);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .heritage-card-link:hover {
+            color: var(--dominican-red);
+            gap: 0.8rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 3rem 0;
             text-align: center;
             flex-shrink: 0;
             width: 100%;
+            position: relative;
+            z-index: 2;
+            margin-top: 5rem;
         }
 
-        footer a {
-            color: #ce1126;
-            margin: 0 10px;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            padding: 0 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--dominican-blue), var(--dominican-red));
+            border-radius: 2px;
+        }
+
+        .footer-column p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(45deg, var(--dominican-blue), var(--dominican-red));
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
+        .footer-links a:hover {
+            color: white;
+            gap: 0.8rem;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Audio Toggle */
         .audio-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ce1126;
-            color: white;
-            padding: 10px;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
             z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, var(--dominican-blue), var(--dominican-red));
         }
 
         @media (max-width: 768px) {
@@ -299,140 +733,506 @@
     </style>
 </head>
 <body>
+    <!-- Intro Page with Stars Animation -->    
     <div id="intro-page">
-        <h1>Dominican Vibes 🇩🇴</h1>
-        <p>Discover the wisdom and pride of the Dominican Republic</p>
-        <button class="pulse-button" onclick="enterSite()">Tap to Enter</button>
+        <div class="stars-container" id="stars-container"></div>
+        <div class="dominican-flag"></div>
+        <div class="intro-content">
+            <h1><span style="color: var(--dominican-blue);">DOM</span><span style="color: white;">INI</span><span style="color: var(--dominican-red);">CAN</span><br>
+            <span style="color: var(--dominican-blue);">VIB</span><span style="color: white;">ES</span> <span style="color: var(--dominican-red);">DO</span></h1>
+            <p>Experience the wisdom, culture, and pride of<br>the Dominican Republic through our<br>immersive quote journey</p>
+            <button class="enter-button" onclick="enterSite()">Begin Experience <i class="fas fa-arrow-right"></i></button>
+        </div>
     </div>
 
+    <!-- Main Page with Animated Background -->    
     <div id="main-page">
+        <div class="background-wrapper">
+            <div class="animated-bg"></div>
+            <div class="overlay"></div>
+        </div>
+
+        <!-- Header with Navigation -->        
         <header>
-            <nav>
-                <ul>
-                    <li><a href="#main-page">Home</a></li>
-                    <li><a href="#quote-section">Quote Generator</a></li>
-                    <li><a href="#heritage-section">Heritage Pride</a></li>
-                    <li><a href="#footer">Contact</a></li>
-                </ul>
-            </nav>
+            <div class="header-container">
+                <div class="logo">
+                    <i class="fas fa-sun"></i> <span>Dominican Vibes</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#main-page"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#quote-section"><i class="fas fa-quote-right"></i> Quotes</a></li>
+                        <li><a href="#heritage-section"><i class="fas fa-landmark"></i> Heritage</a></li>
+                        <li><a href="#footer"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </header>
 
+        <!-- Main Content Area -->        
         <div class="wrapper">
+            <!-- Quote Section with Glassmorphism -->            
             <div id="quote-section" class="quote-container">
-                <p id="quote">Tap "Start Quotes" to begin!</p>
-                <div class="timer" id="timer">Timer: 10s</div>
-                <div class="quote-buttons">
-                    <button id="start-quotes" onclick="startQuotes()">Start Quotes</button>
-                    <button id="new-quote" onclick="fetchQuote()">New Quote</button>
-                    <button id="share-quote" onclick="shareQuote()">Share</button>
-                    <button id="save-quote" onclick="saveQuote()">Save</button>
-                    <button id="read-aloud" onclick="readAloud()">Read Aloud</button>
+                <div class="quote-content">
+                    <div id="quote">
+                        <span class="spanish-quote">Tap "Start Quotes" to begin!</span>
+                        <span class="english-quote">(Your journey through Dominican wisdom awaits)</span>
+                    </div>
+                    <div class="quote-timer" id="timer" style="--progress: 0%">7s</div>
+                    <div class="quote-buttons">
+                        <button class="quote-btn primary" id="start-quotes" onclick="startQuotes()"><i class="fas fa-play"></i> Start Quotes</button>
+                        <button class="quote-btn" id="new-quote" onclick="fetchQuote()"><i class="fas fa-sync-alt"></i> New Quote</button>
+                        <button class="quote-btn" id="share-quote" onclick="shareQuote()"><i class="fas fa-share-alt"></i> Share</button>
+                        <button class="quote-btn" id="save-quote" onclick="saveQuote()"><i class="fas fa-bookmark"></i> Save</button>
+                        <button class="quote-btn" id="read-aloud" onclick="readAloud()"><i class="fas fa-volume-up"></i> Read Aloud</button>
+                    </div>
                 </div>
             </div>
 
+            <!-- Heritage Section with Cards -->            
             <div id="heritage-section" class="heritage-section">
-                <h2>Dominican Heritage Pride</h2>
-                <p>
-                    The Dominican Republic, a Caribbean gem, is known for its vibrant culture, rich history, and resilient spirit. From the infectious rhythms of merengue and bachata to the colorful Carnival celebrations, Dominican pride shines through in every aspect of life. Our island, the first place where Christopher Columbus landed in the Americas, is home to the oldest European settlement, Santo Domingo’s Zona Colonial. We honor our Taíno, African, and European roots, blending them into a unique identity that celebrates family, faith, and community. Whether it’s savoring a plate of mangu or dancing under the stars, Dominican Vibes embodies the warmth and passion of our people.
-                </p>
-                <div class="heritage-carousel">
-                    <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Dominican Beach">
-                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Dominican Culture">
-                    <img src="https://images.unsplash.com/photo-1517495306984-fcebe3c541dd" alt="Merengue Dance">
+                <div class="heritage-title">
+                    <h2>Dominican Heritage & Culture</h2>
+                    <p>Explore the rich tapestry of Dominican culture, from our vibrant music and dance to our delicious cuisine and historical landmarks.</p>
+                </div>
+                
+                <div class="heritage-grid">
+                    <!-- Music Card -->                    
+                    <div class="heritage-card">
+                        <div class="heritage-card-img">
+                            <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629" alt="Dominican Music">
+                        </div>
+                        <div class="heritage-card-content">
+                            <h3 class="heritage-card-title">Music & Dance</h3>
+                            <p class="heritage-card-text">From the energetic beats of Merengue to the passionate rhythms of Bachata, Dominican music moves the soul and brings people together in celebration of life.</p>
+                            <a href="javascript:void(0)" onclick="showMoreInfo('music')" class="heritage-card-link">Discover more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Food Card -->                    
+                    <div class="heritage-card">
+                        <div class="heritage-card-img">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947" alt="Dominican Food">
+                        </div>
+                        <div class="heritage-card-content">
+                            <h3 class="heritage-card-title">Cuisine & Flavors</h3>
+                            <p class="heritage-card-text">Our cuisine blends Spanish, African, and Taíno influences. From Mangú and La Bandera to Sancocho, our dishes tell the story of our diverse heritage.</p>
+                            <a href="javascript:void(0)" onclick="showMoreInfo('cuisine')" class="heritage-card-link">Taste the culture <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- History Card -->                    
+                    <div class="heritage-card">
+                        <div class="heritage-card-img">
+                            <img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a" alt="Dominican History">
+                        </div>
+                        <div class="heritage-card-content">
+                            <h3 class="heritage-card-title">History & Landmarks</h3>
+                            <p class="heritage-card-text">From the Colonial Zone of Santo Domingo to the Fortaleza Ozama, our historical sites preserve the rich tapestry of our past and the foundation of our identity.</p>
+                            <a href="javascript:void(0)" onclick="showMoreInfo('history')" class="heritage-card-link">Explore our past <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Footer with Multiple Columns -->        
         <footer id="footer">
-            <p>Connect with us: 
-                <a href="#">X</a> | 
-                <a href="#">Instagram</a> | 
-                <a href="#">WhatsApp</a>
-            </p>
-            <p>Designed by [Your Name]</p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dominican Vibes</h3>
+                    <p>Celebrating the rich cultural heritage of the Dominican Republic through inspirational quotes and cultural insights.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dominican Vibes. All rights reserved. Created with 💙❤️ for the Dominican culture.</p>
+            </div>
         </footer>
 
-        <div class="audio-toggle" onclick="toggleAudio()">🎵</div>
+        <!-- Audio Toggle Button -->        
+        <div class="audio-toggle" onclick="toggleAudio()"><i class="fas fa-music"></i></div>
     </div>
 
     <audio id="background-audio" loop>
-        <source src="https://www.example.com/merengue.mp3" type="audio/mp3">
-    </audio>
-
-    <script>
-        let quoteInterval;
-        let timerCount = 10;
-        let isQuotesStarted = false;
-
-        function enterSite() {
-            document.getElementById('intro-page').style.display = 'none';
-            document.getElementById('main-page').style.display = 'block';
-        }
-
-        async function fetchQuote() {
-            try {
-                const response = await fetch('https://api.quotable.io/random');
-                const data = await response.json();
-                const bilingualQuotes = [
-                    {
-                        spanish: "Mantén el ritmo de la vida como un beat de merengue.",
-                        english: "Keep the rhythm of life like a merengue beat."
-                    },
-                    {
-                        spanish: "La familia es el corazón de nuestra isla.",
-                        english: "Family is the heart of our island."
-                    },
-                    {
-                        spanish: "Baila por la vida con la pasión del bachata.",
-                        english: "Dance through life with the passion of bachata."
-                    },
-                    {
-                        spanish: `${data.content} — Inspirado por la sabiduría dominicana`,
-                        english: `${data.content} — Inspired by Dominican wisdom`
-                    }
-                ];
-                const randomQuote = bilingualQuotes[Math.floor(Math.random() * bilingualQuotes.length)];
-                document.getElementById('quote').innerHTML = `
-                    <span class="spanish-quote">${randomQuote.spanish}</span><br>
-                    <span class="english-quote">(${randomQuote.english})</span>
-                `;
-                timerCount = 10;
-                document.getElementById('timer').textContent = `Timer: ${timerCount}s`;
-            } catch (error) {
-                document.getElementById('quote').innerHTML = `
-                    <span class="spanish-quote">Mantén el ritmo de la vida como un beat de merengue.</span><br>
-                    <span class="english-quote">(Keep the rhythm of life like a merengue beat.)</span>
-                `;
             }
-        }
 
-        function startQuotes() {
-            if (!isQuotesStarted) {
-                isQuotesStarted = true;
+            .footer-links a:hover {
+                color: white;
+                gap: 0.8rem;
+            }
+
+            .footer-bottom {
+                margin-top: 3rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: center;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 0.9rem;
+            }
+
+            /* Audio Toggle */
+            .audio-toggle {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 100;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+            }
+
+            .audio-toggle:hover {
+                transform: scale(1.1);
+                background: linear-gradient(45deg, var(--dominican-blue), var(--dominican-red));
+            }
+
+            @media (max-width: 768px) {
+                #intro-page h1 { font-size: 2rem; }
+                .pulse-button { font-size: 1.2rem; padding: 10px 20px; }
+                .quote-container p { font-size: 1.4rem; }
+                .heritage-section h2 { font-size: 2rem; }
+                nav ul { flex-direction: column; gap: 10px; }
+                nav ul li { margin: 10px 0; }
+                .heritage-carousel img { width: 150px; height: 120px; }
+            }
+
+            @media (max-width: 480px) {
+                #intro-page h1 { font-size: 1.5rem; }
+                #intro-page p { font-size: 1rem; }
+                .pulse-button { font-size: 1rem; padding: 8px 16px; }
+                .quote-container { padding: 20px; }
+                .quote-container p { font-size: 1.2rem; }
+                .quote-buttons button { font-size: 1rem; padding: 8px 16px; }
+                .heritage-section h2 { font-size: 1.5rem; }
+                .heritage-section p { font-size: 1rem; }
+                .heritage-carousel img { width: 120px; height: 100px; }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Intro Page with Stars Animation -->    
+        <div id="intro-page">
+            <div class="stars-container" id="stars-container"></div>
+            <div class="dominican-flag"></div>
+            <div class="intro-content">
+                <h1>Dominican Vibes 🇩🇴</h1>
+                <p>Experience the wisdom, culture, and pride of the Dominican Republic through our immersive quote journey</p>
+                <button class="enter-button" onclick="enterSite()">Begin Experience <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Main Page with Animated Background -->    
+        <div id="main-page">
+            <div class="background-wrapper">
+                <div class="animated-bg"></div>
+                <div class="overlay"></div>
+            </div>
+
+            <!-- Header with Navigation -->        
+            <header>
+                <div class="header-container">
+                    <div class="logo">
+                        <i class="fas fa-sun"></i> <span>Dominican Vibes</span>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="#main-page"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="#quote-section"><i class="fas fa-quote-right"></i> Quotes</a></li>
+                            <li><a href="#heritage-section"><i class="fas fa-landmark"></i> Heritage</a></li>
+                            <li><a href="#footer"><i class="fas fa-envelope"></i> Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->        
+            <div class="wrapper">
+                <!-- Quote Section with Glassmorphism -->            
+                <div id="quote-section" class="quote-container">
+                    <div class="quote-content">
+                        <div id="quote">
+                            <span class="spanish-quote">Tap "Start Quotes" to begin!</span>
+                            <span class="english-quote">(Your journey through Dominican wisdom awaits)</span>
+                        </div>
+                        <div class="quote-timer" id="timer" style="--progress: 0%">7s</div>
+                        <div class="quote-buttons">
+                            <button class="quote-btn primary" id="start-quotes" onclick="startQuotes()"><i class="fas fa-play"></i> Start Quotes</button>
+                            <button class="quote-btn" id="new-quote" onclick="fetchQuote()"><i class="fas fa-sync-alt"></i> New Quote</button>
+                            <button class="quote-btn" id="share-quote" onclick="shareQuote()"><i class="fas fa-share-alt"></i> Share</button>
+                            <button class="quote-btn" id="save-quote" onclick="saveQuote()"><i class="fas fa-bookmark"></i> Save</button>
+                            <button class="quote-btn" id="read-aloud" onclick="readAloud()"><i class="fas fa-volume-up"></i> Read Aloud</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Heritage Section with Cards -->            
+                <div id="heritage-section" class="heritage-section">
+                    <div class="heritage-title">
+                        <h2>Dominican Heritage & Culture</h2>
+                        <p>Explore the rich tapestry of Dominican culture, from our vibrant music and dance to our delicious cuisine and historical landmarks.</p>
+                    </div>
+                    
+                    <div class="heritage-grid">
+                        <!-- Music Card -->                    
+                        <div class="heritage-card">
+                            <div class="heritage-card-img">
+                                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629" alt="Dominican Music">
+                            </div>
+                            <div class="heritage-card-content">
+                                <h3 class="heritage-card-title">Music & Dance</h3>
+                                <p class="heritage-card-text">From the energetic beats of Merengue to the passionate rhythms of Bachata, Dominican music moves the soul and brings people together in celebration of life.</p>
+                                <a href="javascript:void(0)" onclick="showMoreInfo('music')" class="heritage-card-link">Discover more <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!-- Food Card -->                    
+                        <div class="heritage-card">
+                            <div class="heritage-card-img">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947" alt="Dominican Food">
+                            </div>
+                            <div class="heritage-card-content">
+                                <h3 class="heritage-card-title">Cuisine & Flavors</h3>
+                                <p class="heritage-card-text">Our cuisine blends Spanish, African, and Taíno influences. From Mangú and La Bandera to Sancocho, our dishes tell the story of our diverse heritage.</p>
+                                <a href="javascript:void(0)" onclick="showMoreInfo('cuisine')" class="heritage-card-link">Taste the culture <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!-- History Card -->                    
+                        <div class="heritage-card">
+                            <div class="heritage-card-img">
+                                <img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a" alt="Dominican History">
+                            </div>
+                            <div class="heritage-card-content">
+                                <h3 class="heritage-card-title">History & Landmarks</h3>
+                                <p class="heritage-card-text">From the Colonial Zone of Santo Domingo to the Fortaleza Ozama, our historical sites preserve the rich tapestry of our past and the foundation of our identity.</p>
+                                <a href="javascript:void(0)" onclick="showMoreInfo('history')" class="heritage-card-link">Explore our past <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with Multiple Columns -->        
+            <footer id="footer">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Dominican Vibes</h3>
+                        <p>Celebrating the rich cultural heritage of the Dominican Republic through inspirational quotes and cultural insights.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Dominican Vibes. All rights reserved. Created with 💙❤️ for the Dominican culture.</p>
+                </div>
+            </footer>
+
+            <!-- Audio Toggle Button -->        
+            <div class="audio-toggle" onclick="toggleAudio()"><i class="fas fa-music"></i></div>
+        </div>
+
+        <audio id="background-audio" loop>
+            <source src="https://www.example.com/merengue.mp3" type="audio/mp3">
+        </audio>
+
+        <script>
+            let quoteInterval;
+            let timerCount = 7;
+            let isQuotesStarted = false;
+            
+            // Create stars for the intro page
+            function createStars() {
+                const starsContainer = document.getElementById('stars-container');
+                const starCount = 100;
+                
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    
+                    // Random position
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    star.style.left = `${x}%`;
+                    star.style.top = `${y}%`;
+                    
+                    // Random size
+                    const size = Math.random() * 3;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // Random animation duration and delay
+                    const duration = 2 + Math.random() * 3;
+                    const delay = Math.random() * 5;
+                    star.style.setProperty('--duration', `${duration}s`);
+                    star.style.animationDelay = `${delay}s`;
+                    star.style.setProperty('--opacity', `${0.5 + Math.random() * 0.5}`);
+                    
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            // Initialize stars on page load
+            window.addEventListener('DOMContentLoaded', createStars);
+
+            function enterSite() {
+                document.getElementById('intro-page').style.display = 'none';
+                document.getElementById('main-page').style.display = 'block';
+                // Fetch a quote immediately when entering the site
                 fetchQuote();
-                quoteInterval = setInterval(() => {
-                    timerCount--;
-                    document.getElementById('timer').textContent = `Timer: ${timerCount}s`;
-                    if (timerCount <= 0) {
-                        fetchQuote();
-                    }
-                }, 1000);
             }
-        }
 
-        function shareQuote() {
-            const quote = document.getElementById('quote').textContent;
-            const shareText = encodeURIComponent(quote + " - Dominican Vibes 🇩🇴");
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Dominican Vibes Quote',
-                    text: quote + " - Dominican Vibes 🇩🇴",
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing:', err));
-            } else {
-                window.open(`https://twitter.com/intent/tweet?text=${shareText}`);
+            async function fetchQuote() {
+                try {
+                    // Define our bilingual quotes
+                    const bilingualQuotes = [
+                        {
+                            spanish: "Mantén el ritmo de la vida como un beat de merengue.",
+                            english: "Keep the rhythm of life like a merengue beat."
+                        },
+                        {
+                            spanish: "La familia es el corazón de nuestra isla.",
+                            english: "Family is the heart of our island."
+                        },
+                        {
+                            spanish: "Baila por la vida con la pasión del bachata.",
+                            english: "Dance through life with the passion of bachata."
+                        },
+                        {
+                            spanish: "El sol del Caribe ilumina nuestros sueños.",
+                            english: "The Caribbean sun illuminates our dreams."
+                        },
+                        {
+                            spanish: "Nuestra historia es tan rica como nuestras playas.",
+                            english: "Our history is as rich as our beaches."
+                        },
+                        {
+                            spanish: "Con orgullo dominicano, enfrentamos cada día.",
+                            english: "With Dominican pride, we face each day."
+                        },
+                        {
+                            spanish: "La música es el lenguaje de nuestra alma.",
+                            english: "Music is the language of our soul."
+                        },
+                        {
+                            spanish: "Nuestras raíces nos dan fuerza para crecer.",
+                            english: "Our roots give us strength to grow."
+                        },
+                        {
+                            spanish: "El espíritu dominicano brilla como el sol del Caribe.",
+                            english: "The Dominican spirit shines like the Caribbean sun."
+                        }
+                    ];
+                    
+                    // Get a random quote from our collection
+                    const randomQuote = bilingualQuotes[Math.floor(Math.random() * bilingualQuotes.length)];
+                    
+                    // Update the quote display
+                    const quoteElement = document.getElementById('quote');
+                    quoteElement.innerHTML = `
+                        <span class="spanish-quote">${randomQuote.spanish}</span>
+                        <span class="english-quote">(${randomQuote.english})</span>
+                    `;
+                    
+                    // Reset the timer
+                    timerCount = 7;
+                    updateTimerDisplay();
+                    
+                } catch (error) {
+                    console.error('Error fetching quote:', error);
+                    document.getElementById('quote').innerHTML = `
+                        <span class="spanish-quote">Mantén el ritmo de la vida como un beat de merengue.</span>
+                        <span class="english-quote">(Keep the rhythm of life like a merengue beat.)</span>
+                    `;
+                }
             }
-        }
+
+            function updateTimerDisplay() {
+                const timerElement = document.getElementById('timer');
+                timerElement.textContent = `${timerCount}s`;
+                
+                // Update the progress bar
+                const progressPercentage = ((7 - timerCount) / 7) * 100;
+                timerElement.style.setProperty('--progress', `${progressPercentage}%`);
+            }
+
+            function startQuotes() {
+                // Toggle between start and pause
+                if (!isQuotesStarted) {
+                    // Start quotes
+                    // Fetch a quote immediately when starting
+                    fetchQuote();
+                    
+                    // Clear any existing interval
+                    if (quoteInterval) {
+                        clearInterval(quoteInterval);
+                    }
+                    
+                    // Set the flag and start the interval
+                    isQuotesStarted = true;
+                    
+                    // Change the button text
+                    document.getElementById('start-quotes').innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    
+                    // Start the interval for 7 seconds
+                    quoteInterval = setInterval(() => {
+                        timerCount--;
+                        updateTimerDisplay();
+                        
+                        if (timerCount <= 0) {
+                            fetchQuote();
+                        }
+                    }, 1000);
+                } else {
+                    // Pause quotes
+                    isQuotesStarted = false;
+                    
+                    // Clear the interval
+                    if (quoteInterval) {
+                        clearInterval(quoteInterval);
+                    }
+                    
+                    // Change the button text back to start
+                    document.getElementById('start-quotes').innerHTML = '<i class="fas fa-play"></i> Start Quotes';
+                }
+            }
+
+            function shareQuote() {
+                const quote = document.getElementById('quote').textContent;
+                const shareText = encodeURIComponent(quote + " - Dominican Vibes 🇩🇴");
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Dominican Vibes Quote',
+                        text: quote + " - Dominican Vibes 🇩🇴",
+                        url: window.location.href
+                    }).catch(err => console.log('Error sharing:', err));
+                } else {
+                    window.open(`https://twitter.com/intent/tweet?text=${shareText}`);
+                }
+            }
 
         function saveQuote() {
             const quote = document.getElementById('quote').textContent;
@@ -456,16 +1256,251 @@
             const spanishQuote = quoteElement.querySelector('.spanish-quote').textContent;
             const englishQuote = quoteElement.querySelector('.english-quote').textContent.replace('(', '').replace(')', '');
 
-            const utterance = new SpeechSynthesisUtterance();
-            utterance.text = `${spanishQuote} (Translation: ${englishQuote})`;
-            utterance.lang = 'es-ES'; // Set language to Spanish for the primary reading
-            utterance.volume = 1;
-            utterance.rate = 0.9;
-            utterance.pitch = 1;
-
-            window.speechSynthesis.speak(utterance);
+            // Create utterance for Spanish
+            const spanishUtterance = new SpeechSynthesisUtterance();
+            spanishUtterance.text = spanishQuote;
+            spanishUtterance.lang = 'es-ES'; // Set language to Spanish
+            spanishUtterance.volume = 1;
+            spanishUtterance.rate = 0.9;
+            spanishUtterance.pitch = 1;
+            
+            // Create utterance for English
+            const englishUtterance = new SpeechSynthesisUtterance();
+            englishUtterance.text = `Translation: ${englishQuote}`;
+            englishUtterance.lang = 'en-US'; // Set language to English
+            englishUtterance.volume = 1;
+            englishUtterance.rate = 0.9;
+            englishUtterance.pitch = 1;
+            
+            // Speak Spanish first, then English
+            window.speechSynthesis.speak(spanishUtterance);
+            
+            // Wait for Spanish to finish before speaking English
+            spanishUtterance.onend = function() {
+                window.speechSynthesis.speak(englishUtterance);
+            };
         }
 
+        function showMoreInfo(category) {
+            let title, content;
+            
+            // Define content for each category
+            switch(category) {
+                case 'music':
+                    title = 'Dominican Music & Dance';
+                    content = `
+                        <p>Dominican music is a vibrant expression of our culture, with genres like:</p>
+                        <ul>
+                            <li><strong>Merengue</strong> - The national music and dance of the Dominican Republic</li>
+                            <li><strong>Bachata</strong> - A romantic style with emotional lyrics and sensual dance moves</li>
+                            <li><strong>Palo</strong> - Traditional Afro-Dominican religious music</li>
+                            <li><strong>Dembow</strong> - A modern urban genre popular among youth</li>
+                        </ul>
+                        <p>These rhythms are an essential part of our celebrations and daily life.</p>
+                    `;
+                    break;
+                    
+                case 'cuisine':
+                    title = 'Dominican Cuisine & Flavors';
+                    content = `
+                        <p>Dominican cuisine is a delicious blend of Spanish, African, and Taíno influences:</p>
+                        <ul>
+                            <li><strong>La Bandera</strong> - Our national dish with rice, beans, and meat</li>
+                            <li><strong>Mangú</strong> - Mashed plantains often served for breakfast</li>
+                            <li><strong>Sancocho</strong> - A hearty seven-meat stew for celebrations</li>
+                            <li><strong>Tostones</strong> - Fried plantain slices, a popular side dish</li>
+                        </ul>
+                        <p>Our food reflects our diverse heritage and love for rich flavors.</p>
+                    `;
+                    break;
+                    
+                case 'history':
+                    title = 'Dominican History & Landmarks';
+                    content = `
+                        <p>The Dominican Republic has a rich historical heritage:</p>
+                        <ul>
+                            <li><strong>Colonial Zone</strong> - The oldest European settlement in the Americas</li>
+                            <li><strong>Alcázar de Colón</strong> - Columbus family palace from the 16th century</li>
+                            <li><strong>Fortaleza Ozama</strong> - The oldest fortress in the Americas</li>
+                            <li><strong>Altar de la Patria</strong> - Monument to our founding fathers</li>
+                        </ul>
+                        <p>These sites preserve our connection to our past and cultural identity.</p>
+                    `;
+                    break;
+            }
+            
+            // Create modal to display information
+            const modal = document.createElement('div');
+            modal.className = 'info-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal" onclick="closeModal(this.parentElement.parentElement)">&times;</span>
+                    <h2>${title}</h2>
+                    <div class="modal-body">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            
+            // Add styles for the modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .info-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    animation: fadeIn 0.3s;
+                }
+                .modal-content {
+                    background: rgba(255,255,255,0.1);
+                    backdrop-filter: blur(10px);
+                    -webkit-backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 15px;
+                    width: 80%;
+                    max-width: 600px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    padding: 2rem;
+                    color: white;
+                    position: relative;
+                    animation: slideIn 0.3s;
+                }
+                .close-modal {
+                    position: absolute;
+                    top: 15px;
+                    right: 20px;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: white;
+                }
+                .modal-body {
+                    margin-top: 1rem;
+        @media (max-width: 1200px) {
+            .heritage-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .quote-container {
+                max-width: 90%;
+                padding: 2rem;
+            }
+            
+            .quote-text {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            #intro-page h1 {
+                font-size: 2.5rem;
+            }
+            
+            #intro-page p {
+                font-size: 1rem;
+                max-width: 500px;
+            }
+            
+            .quote-text {
+                font-size: 1.6rem;
+            }
+            
+            .quote-author {
+                font-size: 1.1rem;
+            }
+            
+            .heritage-card-title {
+                font-size: 1.3rem;
+            }
+            
+            .heritage-card-description {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .heritage-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+{{ ... }}
+        @media (max-width: 480px) {
+            #intro-page h1 {
+                font-size: 1.8rem;
+            }
+            
+            #intro-page p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+                margin-bottom: 1.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .quote-author {
+                font-size: 0.9rem;
+            }
+            
+            .heritage-card-title {
+                font-size: 1.2rem;
+            }
+            
+            .heritage-card-description {
+                font-size: 0.85rem;
+            }
+            
+            .heritage-card-link {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .control-button {
+                font-size: 0.8rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+                    margin-left: 1.5rem;
+                    margin-bottom: 1rem;
+                }
+                .modal-body li {
+                    margin-bottom: 0.5rem;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            
+            document.head.appendChild(style);
+            document.body.appendChild(modal);
+        }
+        
+        function closeModal(modal) {
+            modal.style.animation = 'fadeOut 0.3s';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        }
+        
         function setDynamicBackground() {
             const hour = new Date().getHours();
             const mainPage = document.getElementById('main-page');
