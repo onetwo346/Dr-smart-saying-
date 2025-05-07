@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominican Vibes - Quote Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #003087, #ffffff, #ce1126);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Intro Page */
+        #intro-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1517495306984-fcebe3c541dd') no-repeat center/cover;
+            color: white;
+            position: relative;
+            animation: fadeIn 2s ease-in;
+        }
+
+        #intro-page h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .pulse-button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            background: #ce1126;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+            transition: transform 0.3s;
+        }
+
+        .pulse-button:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(206, 17, 38, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(206, 17, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(206, 17, 38, 0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Main Page */
+        #main-page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .quote-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f4f4f4;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: slideIn 1s ease-in;
+        }
+
+        .quote-container p {
+            font-size: 1.8rem;
+            color: #003087;
+            margin-bottom: 20px;
+        }
+
+        .quote-container button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background: #003087;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .quote-container button:hover {
+            background: #ce1126;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Heritage Section */
+        .heritage-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .heritage-section h2 {
+            font-size: 2.5rem;
+            color: #ce1126;
+            margin-bottom: 20px;
+        }
+
+        .heritage-section p {
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #intro-page h1 {
+                font-size: 2rem;
+            }
+
+            .pulse-button {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+
+            .quote-container p {
+                font-size: 1.4rem;
+            }
+
+            .heritage-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Page -->
+    <div id="intro-page">
+        <h1>Dominican Vibes 🇩🇴</h1>
+        <p>Discover the wisdom and pride of the Dominican Republic</p>
+        <button class="pulse-button" onclick="enterSite()">Tap to Enter</button>
+    </div>
+
+    <!-- Main Page -->
+    <div id="main-page">
+        <div class="quote-container">
+            <p id="quote">Loading quote...</p>
+            <button onclick="fetchQuote()">New Quote</button>
+        </div>
+        <div class="heritage-section">
+            <h2>Dominican Heritage Pride</h2>
+            <p>
+                The Dominican Republic, a Caribbean gem, is known for its vibrant culture, rich history, and resilient spirit. From the infectious rhythms of merengue and bachata to the colorful Carnival celebrations, Dominican pride shines through in every aspect of life. Our island, the first place where Christopher Columbus landed in the Americas, is home to the oldest European settlement, Santo Domingo’s Zona Colonial. We honor our Taíno, African, and European roots, blending them into a unique identity that celebrates family, faith, and community. Whether it’s savoring a plate of mangu or dancing under the stars, Dominican Vibes embodies the warmth and passion of our people.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Show main page
+        function enterSite() {
+            document.getElementById('intro-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            fetchQuote(); // Load first quote
+            startAutoQuote(); // Start auto quote generation
+        }
+
+        // Fetch quote from Quotable API
+        async function fetchQuote() {
+            try {
+                const response = await fetch('https://api.quotable.io/random');
+                const data = await response.json();
+                const dominicanQuotes = [
+                    `"${data.content}" — Inspired by Dominican wisdom`,
+                    `"Keep the rhythm of life like a merengue beat." — Dominican Proverb`,
+                    `"Family is the heart of our island." — Dominican Saying`,
+                    `"Dance through life with the passion of bachata." — Dominican Wisdom`
+                ];
+                const randomQuote = dominicanQuotes[Math.floor(Math.random() * dominicanQuotes.length)];
+                document.getElementById('quote').textContent = randomQuote;
+            } catch (error) {
+                document.getElementById('quote').textContent = "Keep the rhythm of life like a merengue beat.";
+            }
+        }
+
+        // Auto-generate quotes every 10 seconds
+        function startAutoQuote() {
+            setInterval(fetchQuote, 10000);
+        }
+    </script>
+</body>
+</html>
